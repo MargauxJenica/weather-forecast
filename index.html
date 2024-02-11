@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Oswald:wght@500&family=Work+Sans&display=swap" rel="stylesheet">
+   
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <title>Weather Forecast</title>
+</head>
+
+<!-- Items on Page:
+userInput (searched city)
+searchHistory
+weather display
+current weather
+week forecast  -->
+<body>
+
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <!-- Search Bar + History -->
+    <section class="container">
+
+        <div id="userInput">
+
+            <input type="text" class="SearchBar" placeholder="Enter City Name">
+            <button id="search-Btn" class="btn">Search</button>
+
+        </div>
+
+        <div id="searchHistory"> <!-- ul --> </div>
+
+    </section>
+
+        <!-- Weather Forecast Display -->
+        <main class="container forecastDisplay">
+
+            <div id="currentWeather"><!-- current forecast --></div>
+             <div id="forecast"><!-- forecast --></div> 
+               
+        </main>
+
+    <script src="./assets/js/index.js"></script>
+
+</body>
+</html>
