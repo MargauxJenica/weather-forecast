@@ -8,56 +8,67 @@
         // weather
 
 // html elements
-var userInput = document.getElementById("userInput");
-var currentCity = document.getElementById("city"); // display user's input 
-var searchBtn = document.getElementById("search-Btn"); // search button for form
-var searchHistory = document.getElementById("searchHistory"); //
+var userInput = document.getElementById("userInput"); 
+var currentCity = document.getElementById("userInput"); // display user's input 
+var searchBtn = document.getElementById("search-Btn"); // search button for form 
+var userHistory = document.getElementById("userHistory"); 
 
 // variables
-var city = "San Diego" // default and will hold the value of userInput
+var city = "San Diego";// default and will hold the value of userInput
 var searchHistoryArray = [];
+var apiKey = "e03184690f717860154f954a4e25bb32";
 
 // APIs
-// const weatherAPI = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=e03184690f717860154f954a4e25bb32";
-// const geoAPI = "api.openweathermap.org/data/2.5/forecast?q={city name},{state code},{country code}&appid=e03184690f717860154f954a4e25bb32";
+
+var geoAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
 // functions
-function loadPage () { // load default and local storage search history 
+function loadPage () { // load default page and search history
+    console.log("Default City: " + city);
+    getForecast(city); // Should Default to San Diego
+   // searchHistory();
+}
+function searchHistory (historyItem) { // load and save to local storage for search history 
 
-    var searchedCity = localStorage.getItem("city");
+    if (historyItem !== undefined) {
+        localStorage.setItem("city", historyItem);
+        console.log("Saved to local storage: " + historyItem);
+    
+                
+        var searchedCity = localStorage.getItem("city");
+        console.log("Retreived from local storage: " + searchedCity);
 
-    if (searchedCity != null) {
-        searchHistory.textContent = searchedCity;
-        console.log("User's previous search: " + searchHistory);
+        searchHistoryArray.push(searchedCity);
+        console.log("Search History: " + searchHistoryArray);
+
     }
-    
-    
+} // end of loadPage()
 
-}
-function findCity () { // take the user's input to find the city they are looking for
+function getForecast (city) { // take the user's input to get the forecast 
 
+    console.log("Loading Forecast: " + city);
 
-
-}
+} // end of getForecast
 
 // event listeners and initial function calls
 loadPage();
 
 searchBtn.addEventListener("click", function (event) { // save to local storage and call to findCity or alert user
-   
-    event.preventDefault(); // prevent refresh after form submitted
-    city = userInput.value.trim(); // cut any leading or trailing whitespce 
+   event.preventDefault();
 
-    // checking that the trigger was set off by a button
-    if (event.target.tagName === "BUTTON") {
-        // checks that the user inputs a city
-        if (city !== "") {
-            console.log("User input " + city);
-            localStorage.setItem("city", city); // saving user's search
+   var userCity = userInput.value.trim(); // remove any leading/trailing whitespace from the value of userInput 
+   console.log("User city input: " + userCity); 
 
-            findCity(city); 
-        }else{
-            alert("Please Enter in City Name (i.e., San Diego)");
-        }
-    }
-})
+   if (userCity !==''){ 
+    city = userCity;
+    console.log("City: " + city);
+    searchHistory(city);
+    getForecast(city);
+   }else {
+    alert('Please enter a city name.');
+   }
+});
+
+// searchedCity.addEventListener("click", function() {
+
+// });

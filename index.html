@@ -11,11 +11,12 @@
     <title>Weather Dashboard</title>
 </head>
 <!-- Items on Page:
-userInput (searched city)
-searchHistory
+search display
+    - userInput (searched city)
+    - searchHistory
 weather display
-current weather
-week forecast  -->
+    - current weather
+    - week forecast  -->
 <body>
 
     <header>
@@ -23,24 +24,33 @@ week forecast  -->
     </header>
 
     <!-- Search Bar + History -->
-    <section class="searchContainer">
+    <section class="searchAndHistory">
 
-        <form>
+        <form class="searchContainer">
 
             <input id="userInput" type="text" class="searchBar" placeholder="Enter City Name">
             <button id="search-Btn" class="btn">Search</button>
 
         </form>
 
-        <div id="searchHistory"> <!-- ul --> </div>
+        <div class="historyContainer">
+            <ul id="userHistory"></ul>
+        </div>
 
     </section>
 
     <!-- Weather Forecast Display -->
     <main class="container forecastDisplay">
 
-        <div class ="currentWeather" id="city"><!-- current forecast --></div>
-        <div class ="forecast"><!-- forecast --></div> 
+        <div class ="currentWeather" id="city">
+            <!-- current forecast -->
+            <h2 id="currentCity"></h2>
+        </div>
+        <div class ="forecast">
+            <!-- forecast -->
+            <h3>5 Day Forecast:</h3>
+            <ul id="forecastCards"></ul>
+        </div> 
                
     </main>
 
@@ -48,4 +58,3 @@ week forecast  -->
 
 </body>
 </html>
-

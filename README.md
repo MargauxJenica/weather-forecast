@@ -11,7 +11,7 @@ The objective of this project is to create a weather dashboard that seamlessly r
  Third-party APIs play a pivotal role in the realm of software development, providing a gateway for developers to access external data, services, and functionalities seamlessly. These APIs, created and maintained by external entities, empower developers to integrate pre-built features into their applications, significantly reducing development time and effort. The importance of third-party APIs lies in their ability to expand the capabilities of an application by incorporating specialized services without the need for in-house development.Overall, third-party APIs are indispensable tools that contribute to the efficiency, scalability, and innovation of software development processes.
 
 ## Final Product
-![asdfghjkl]("images")
+![Dashboard](./assests/images/)
 
 
-## [Weather Dashboard!](https://margauxjenica.github.io/workDay-scheduler/)
+## [Weather Dashboard](https://margauxjenica.github.io/workDay-scheduler/)
