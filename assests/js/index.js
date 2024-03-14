@@ -123,17 +123,24 @@ function displayFutureForecast(forecastData) { // display 5 day forecast
     var forecastCardsElement = document.getElementById("forecastCards");
     forecastCardsElement.innerHTML = "";
 
-    // Loop through the forecast list and display each day's forecast
+    var today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to midnight
+
+    // Loop through the forecast list starting from the next day
     for (var i = 0; i < forecastData.list.length; i++) {
         // Extract the forecast for the current day
         var forecast = forecastData.list[i];
 
-        // Check if the forecast is for a new day
-        if (i === 0 || forecast.dt_txt.includes("00:00:00")) {
+        // Convert forecast date to Date object
+        var forecastDate = new Date(forecast.dt * 1000);
+        forecastDate.setHours(0, 0, 0, 0); // Set time to midnight
+
+        // Check if the forecast is for a new day and it's not today
+        if (forecastDate > today && forecast.dt_txt.includes("00:00:00")) {
             // Create HTML elements for the forecast
             var forecastCard = document.createElement("li");
             forecastCard.innerHTML = `
-                <h4>${new Date(forecast.dt * 1000).toDateString()}</h4>
+                <h4>${forecastDate.toDateString()}</h4>
                 <p>Temperature: ${forecast.main.temp} K</p>
                 <p>Humidity: ${forecast.main.humidity}%</p>
                 <p>Wind Speed: ${forecast.wind.speed} m/s</p>
