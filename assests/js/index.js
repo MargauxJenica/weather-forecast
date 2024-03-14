@@ -14,7 +14,7 @@ var userInput = document.getElementById("userInput"); // display user's input
 var searchBtn = document.getElementById("search-Btn"); // search button for form 
 var userHistory = document.getElementById("userHistory"); 
 var currentCity = document.getElementById("currentCity");
-
+var currentWeatherContainer = document.querySelector(".currentWeather");
 
 // variables
 var city = "San Diego";// default and will hold the value of userInput
@@ -26,24 +26,39 @@ function loadPage () { // load default page and search history
     console.log("Default City: " + city);
     currentCity.textContent = city;
     getForecast(city); // Should Default to San Diego
-    // getFutureForecast(city); 
-   // searchHistory();
+    getFutureForecast(city); 
+    sear
+    chHistory();
 }
-function searchHistory (historyItem) { // load and save to local storage for search history 
-
+function searchHistory(historyItem) { 
     if (historyItem !== undefined) {
         localStorage.setItem("city", historyItem);
         console.log("Saved to local storage: " + historyItem);
-    
-                
+        
         var searchedCity = localStorage.getItem("city");
-        console.log("Retreived from local storage: " + searchedCity);
+        console.log("Retrieved from local storage: " + searchedCity);
 
         searchHistoryArray.push(searchedCity);
         console.log("Search History: " + searchHistoryArray);
 
+        // Create a button for the historyItem
+        var historyButton = document.createElement("button");
+        historyButton.textContent = searchedCity;
+        historyButton.addEventListener("click", function() {
+            // Clear previous weather details
+            currentCity.textContent = ""; // Clear the city name
+            getForecast(searchedCity);
+            getFutureForecast(searchedCity);
+        });
+
+        // Append the button to the userHistory list
+        var historyItemElement = document.createElement("li");
+        historyItemElement.appendChild(historyButton);
+
+        // Add the list item to the beginning of the userHistory list
+        userHistory.prepend(historyItemElement);
     }
-} // end of loadPage()
+}
 
 function getForecast(city) { // current forecast
     // API URL for current weather
@@ -77,22 +92,21 @@ function getFutureForecast(city) { // five day forecast
             return response.json();
         })
         .then(data => {
-            // displayFutureForecast(data);
+            displayFutureForecast(data);
         })
 }
 
-function displayForecast(weatherData) {
-    console.log("Displaying forecast for: ", weatherData.name);
-    // Select the current weather container
-    var currentWeatherContainer = document.querySelector(".currentWeather");
+function displayForecast(weatherData) { // display current forecast
     // Clear previous current weather details
     currentWeatherContainer.innerHTML = "";
+    console.log("Displaying forecast for: ", weatherData.name);
 
     // Display current city name
     currentCity.textContent = weatherData.name;
 
     // Display current weather details
     var currentWeatherElement = document.createElement("div");
+    currentWeatherElement.innerHTML= "";
     currentWeatherElement.innerHTML = `
         <p>Temperature: ${weatherData.main.temp} K</p>
         <p>Humidity: ${weatherData.main.humidity}%</p>
@@ -102,11 +116,33 @@ function displayForecast(weatherData) {
     currentWeatherContainer.appendChild(currentWeatherElement);
 } // end of displayForecast
 
+function displayFutureForecast(forecastData) { // display 5 day forecast
+    console.log("Five day forecast: " + forecastData);
 
-// function displayFiveDayForecast(forecastData) {
+    // Clear previous forecast cards
+    var forecastCardsElement = document.getElementById("forecastCards");
+    forecastCardsElement.innerHTML = "";
 
-// }
+    // Loop through the forecast list and display each day's forecast
+    for (var i = 0; i < forecastData.list.length; i++) {
+        // Extract the forecast for the current day
+        var forecast = forecastData.list[i];
 
+        // Check if the forecast is for a new day
+        if (i === 0 || forecast.dt_txt.includes("00:00:00")) {
+            // Create HTML elements for the forecast
+            var forecastCard = document.createElement("li");
+            forecastCard.innerHTML = `
+                <h4>${new Date(forecast.dt * 1000).toDateString()}</h4>
+                <p>Temperature: ${forecast.main.temp} K</p>
+                <p>Humidity: ${forecast.main.humidity}%</p>
+                <p>Wind Speed: ${forecast.wind.speed} m/s</p>
+                <img src="http://openweathermap.org/img/w/${forecast.weather[0].icon}.png" alt="${forecast.weather[0].main}">
+            `;
+            forecastCardsElement.appendChild(forecastCard);
+        }
+    }
+}
 
 // event listeners and initial function calls
 loadPage();
@@ -121,6 +157,9 @@ searchBtn.addEventListener("click", function (event) { // save to local storage 
     city = userCity;
     console.log("City: " + city);
     searchHistory(city);
+    // Clear previous weather details
+    currentCity.textContent = ""; // Clear the city name
+
     getForecast(city);
    }else {
     alert('Please enter a city name.');
