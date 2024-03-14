@@ -8,24 +8,25 @@
         // weather
 
 // html elements
+document.addEventListener("DOMContentLoaded", function() {
 var userInput = document.getElementById("userInput"); 
-var currentCity = document.getElementById("userInput"); // display user's input 
+var userInput = document.getElementById("userInput"); // display user's input 
 var searchBtn = document.getElementById("search-Btn"); // search button for form 
 var userHistory = document.getElementById("userHistory"); 
+var currentCity = document.getElementById("currentCity");
+
 
 // variables
 var city = "San Diego";// default and will hold the value of userInput
 var searchHistoryArray = [];
 var apiKey = "e03184690f717860154f954a4e25bb32";
 
-// APIs
-
-var geoAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
-
 // functions
 function loadPage () { // load default page and search history
     console.log("Default City: " + city);
+    currentCity.textContent = city;
     getForecast(city); // Should Default to San Diego
+    // getFutureForecast(city); 
    // searchHistory();
 }
 function searchHistory (historyItem) { // load and save to local storage for search history 
@@ -44,11 +45,68 @@ function searchHistory (historyItem) { // load and save to local storage for sea
     }
 } // end of loadPage()
 
-function getForecast (city) { // take the user's input to get the forecast 
+function getForecast(city) { // current forecast
+    // API URL for current weather
+    var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
-    console.log("Loading Forecast: " + city);
+    console.log("Loading Current Weather: " + city);
 
-} // end of getForecast
+    fetch(currentWeatherURL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayForecast(data);
+        })
+}
+
+function getFutureForecast(city) { // five day forecast
+    // API URL for 5-day forecast
+    var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
+
+    console.log("Loading 5-Day Forecast: " + city);
+
+    fetch(forecastURL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // displayFutureForecast(data);
+        })
+}
+
+function displayForecast(weatherData) {
+    console.log("Displaying forecast for: ", weatherData.name);
+    // Select the current weather container
+    var currentWeatherContainer = document.querySelector(".currentWeather");
+    // Clear previous current weather details
+    currentWeatherContainer.innerHTML = "";
+
+    // Display current city name
+    currentCity.textContent = weatherData.name;
+
+    // Display current weather details
+    var currentWeatherElement = document.createElement("div");
+    currentWeatherElement.innerHTML = `
+        <p>Temperature: ${weatherData.main.temp} K</p>
+        <p>Humidity: ${weatherData.main.humidity}%</p>
+        <p>Wind Speed: ${weatherData.wind.speed} m/s</p>
+        <img src="http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png" alt="${weatherData.weather[0].main}">
+    `;
+    currentWeatherContainer.appendChild(currentWeatherElement);
+} // end of displayForecast
+
+
+// function displayFiveDayForecast(forecastData) {
+
+// }
+
 
 // event listeners and initial function calls
 loadPage();
@@ -72,3 +130,4 @@ searchBtn.addEventListener("click", function (event) { // save to local storage 
 // searchedCity.addEventListener("click", function() {
 
 // });
+});
