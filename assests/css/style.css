@@ -1,0 +1,149 @@
+/* General styles */
+body {
+    font-family: 'Noto Sans', sans-serif;
+    background-color: #f2f2f2;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Oswald', sans-serif;
+    color: #333;
+}
+
+/* Header styles */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Search bar and history styles */
+.searchAndHistory {
+    display: flex;
+    flex-direction: column; /* Display search and history items vertically */
+    align-items: flex-start; /* Align items to the left */
+    margin-bottom: 20px;
+    max-width: 400px; /* Set maximum width for the container */
+    margin-left: 20px; /* Add left margin to push it to the left side */
+}
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.searchBar {
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 70%; /* Adjust the width as needed */
+    max-width: 250px; /* Set maximum width for the search bar */
+}
+
+#search-Btn {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue background */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.historyContainer {
+    margin-top: 20px;
+}
+
+#userHistory {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#userHistory li {
+    margin-bottom: 5px;
+}
+
+#userHistory button {
+    background-color: #fff; /* White background */
+    color: #000; /* Black text */
+    padding: 10px 20px;
+    border: 1px solid #000; /* Black border */
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Take up full width */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    white-space: nowrap; /* Prevent button text from wrapping */
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Show ellipsis for overflow text */
+}
+
+#userHistory button:hover {
+    background-color: #f2f2f2; /* Light gray background on hover */
+}
+
+
+
+/* Weather forecast display styles */
+.forecastDisplay {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#city {
+    margin-bottom: 20px;
+}
+
+.currentWeather {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.forecast {
+    display: flex;
+    flex-direction: column; /* Display forecast items vertically */
+}
+
+.forecast h3 {
+    margin-bottom: 10px;
+}
+
+.forecastCards {
+    display: flex;
+    flex-wrap: wrap; /* Allow forecast cards to wrap */
+    justify-content: space-between; /* Distribute forecast cards evenly */
+}
+
+.forecastCards li {
+    flex-basis: calc(20% - 10px); /* Calculate individual card width with margin */
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+.forecastCards img {
+    margin-top: 10px;
+    display: block; /* Ensure images don't cause layout issues */
+    margin-left: auto; /* Center images horizontally */
+    margin-right: auto;
+}
+
+
+/* Current weather display styles */
+.currentWeather {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
